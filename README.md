@@ -10,16 +10,34 @@ Template per applicazioni Python deployate su Google Cloud Run con CI/CD automat
   - `deploy.yml`: build + push GCR + deploy Cloud Run
 - **Workflow di sviluppo** strutturato (vedi [WORKFLOW.md](./WORKFLOW.md))
 
+## Struttura
+
+```
+python-gcp-template/
+├── .github/workflows/
+│   ├── ci.yml          # Lint, test, Docker build
+│   └── deploy.yml      # Deploy su Cloud Run
+├── src/my_app/
+│   ├── __init__.py
+│   └── main.py         # FastAPI app con /health
+├── tests/
+│   └── test_main.py
+├── Dockerfile
+├── pyproject.toml      # Python 3.10+, FastAPI, Ruff, Pytest
+├── WORKFLOW.md         # Workflow di sviluppo
+├── CLAUDE.md           # Contesto per Claude
+├── README.md
+└── .gitignore
+```
+
 ## Uso del Template
 
-1. Clicca "Use this template" su GitHub
+1. Vai su GitHub e clicca **"Use this template"**
 2. Configura le variabili in `.github/workflows/deploy.yml`:
    - `PROJECT_ID`: il tuo GCP project ID
    - `REGION`: la region Cloud Run (default: europe-west1)
    - `SERVICE_NAME`: nome del servizio
-
-3. Configura i GitHub Secrets:
-   - `GCP_SA_KEY`: JSON key del service account GCP
+3. Aggiungi il secret `GCP_SA_KEY` nelle settings del repo (vedi Setup GCP)
 
 ## Sviluppo Locale
 
@@ -36,23 +54,6 @@ pytest -v
 # Lint
 ruff check src/
 ruff format src/
-```
-
-## Struttura Progetto
-
-```
-├── .github/workflows/
-│   ├── ci.yml          # CI: lint, test, build
-│   └── deploy.yml      # Deploy su Cloud Run
-├── src/my_app/
-│   ├── __init__.py
-│   └── main.py         # FastAPI app
-├── tests/
-│   └── test_main.py
-├── Dockerfile
-├── pyproject.toml
-├── WORKFLOW.md         # Workflow di sviluppo
-└── README.md
 ```
 
 ## Setup GCP
